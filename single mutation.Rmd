@@ -1,0 +1,498 @@
+---
+title: "DynamicBind"
+output: html_document
+date: "2024-10-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ATV
+
+For inhibitor ATV, the single mutations I50L, A71V, R57G, L63P, I64V are selected to do the prediction.
+
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(0.897001049,1.534578927,0.796950766,0.916790973,1.173054378)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.352603262,1.567577547,0.799184248,0.78491542,1.054536388)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.014825526,1.649007801,0.871906525,0.808731157,0.927492651)
+
+# Median FC
+FC_median <- c(3,1,0.8,0.8,2)
+
+# plot all the plots
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+
+# Plot the curves
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+
+# FC
+FC <- c(5.4,2,3,1,1.1,0.8,0.7,0.9,0.8,2.4,2,0.9)
+affinity_unrelaxed_FC <- c(0.897001049,0.897001049,0.897001049,1.534578927,1.534578927,1.534578927,0.796950766,0.796950766,0.916790973,1.173054378,1.173054378,1.173054378)
+plot(affinity_unrelaxed_FC, FC, main = "Ratio of Affinity vs Fold Change", xlab = "Ratio of Affinity", ylab = "Fold Change", pch = 16)
+linear_model <- lm(FC ~ affinity_unrelaxed_FC)
+summary(linear_model)
+abline(linear_model, col = "blue")
+
+```
+
+## IDV
+
+For inhibitor IDV, single mutations I50L, A71V, R57G, L10F, N88S, K20T, L63P, R41K, I64V, I84C, L63Q, L63A are selected.
+
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(0.854338081, 1.126120987, 0.972350191, 0.825845588, 1.100121877, 0.822695752, 0.960595423, 0.728228423, 0.819437744, 1.009070072, 1.153778771, 0.95546618)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.02282427,1.282074005,0.986741994,0.880965098,1.34955373,0.933309457,0.812604685,0.760600972,0.798239898,1.012549727,1.350480416,0.884335874)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.10101938,1.222653254,0.962110537,1.006590621,1.288664059,1.06118098,0.844659655,0.992419404,0.798666933,0.907603974,1.213313502,1.120532326)
+
+
+# Median FC
+FC_median <- c(1.5,0.5,0.6,0.1,1,0.4,0.6,0.9,0.75,1,1.2,1.6)
+
+# Specify the file path for the output image
+png("IDV1.png", width = 2000, height = 1500, res = 300)
+# plot all the plots
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save IDV1.png
+dev.off()
+
+# Plot the curves
+png("IDV2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+
+# Close the device to save the file
+dev.off()
+```
+
+## NFV
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(1.091480187,1.155509207,1.147314693,0.986384536,1.392486308,0.896273929,0.961480544,0.764748027,0.804897728,1.405058743,1.264139411,1.151333868)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.064085097,1.439161535,1.239692876,1.057591106,1.42733447,1.086663134,0.914576514,0.917969682,1.07845639,1.192706031,1.371224651,0.898933313)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.186327878,1.033789616,1.081736675,1.330627302,1.149443393,1.229004772,1.729249956,1.649221434,1.156659745,1.083926144,0.972314323,0.785447378)
+
+# Median FC
+FC_median <- c(1.3,0.4,0.5,0.1,1,0.5,0.8,1.1,1,1.3,15.3,2.4)
+
+# plot all the plots
+png("NFV1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save the file
+dev.off()
+
+# Plot the curves
+png("NFV2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+```
+
+## NFV without outlier
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(1.091480187,1.155509207,1.147314693,0.986384536,1.392486308,0.896273929,0.961480544,0.764748027,0.804897728,1.405058743,1.151333868)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.064085097,1.439161535,1.239692876,1.057591106,1.42733447,1.086663134,0.914576514,0.917969682,1.07845639,1.192706031,0.898933313)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.186327878,1.033789616,1.081736675,1.330627302,1.149443393,1.229004772,1.729249956,1.649221434,1.156659745,1.083926144,0.785447378)
+
+# Median FC
+FC_median <- c(1.3,0.4,0.5,0.1,1,0.5,0.8,1.1,1,1.3,2.4)
+
+# plot all the plots
+png("NFV_out1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save the file
+dev.off()
+
+# Plot the curves
+png("NFV_out2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+```
+
+## SQV
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(1.031875358,1.243511628,0.900923988,1.301665257,0.967093311,0.965524315,0.722806632,0.85946024,0.863900473,0.912902342)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.109366813,1.465283174,1.13005981,1.805011528,1.250370683,1.105184606,0.959012485,1.34354006,1.137829472,1.012616126)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.064580449,1.047035223,0.862839023,1.466713516,0.974025292,0.718515784,0.805306039,1.094202983,1.106146988,1.164363485)
+
+# Median FC
+FC_median <- c(1.3,0.4,0.7,0.95,0.5,0.6,1,0.6,6.1,0.5)
+
+# plot all the plots
+png("SQV1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save the file
+dev.off()
+
+# Plot the curves
+png("SQV2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+```
+
+## SQV without outlier
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(1.031875358,1.243511628,0.900923988,1.301665257,0.967093311,0.965524315,0.722806632,0.85946024,0.912902342)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.109366813,1.465283174,1.13005981,1.805011528,1.250370683,1.105184606,0.959012485,1.34354006,1.012616126)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(1.064580449,1.047035223,0.862839023,1.466713516,0.974025292,0.718515784,0.805306039,1.094202983,1.164363485)
+
+# Median FC
+FC_median <- c(1.3,0.4,0.7,0.95,0.5,0.6,1,0.6,0.5)
+
+# plot all the plots
+png("SQV_out1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save the file
+dev.off()
+
+# Plot the curves
+png("SQV_out2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+```
+
+# LPV
+```{r}
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed <- c(0.778859282,0.915708022,1.286583194,0.877899956,0.755963532,0.833363059,0.835707918,1.180246554)
+
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(0.957257353,1.04672122,1.269996827,1.131051956,0.956755067,0.894593315,0.876484379,1.220895691)
+
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline <- c(0.933782477,1.049669126,1.183128858,0.959789333,0.872106388,0.761131063,0.909272792,1.263683094)
+
+# Median FC
+FC_median <- c(1.6,0.6,1.1,0.5,0.5,0.8,0.9,0.4)
+
+# plot all the plots
+png("LPV1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model)
+abline(linear_model, col = "blue")
+par(mfrow = c(1, 1))
+# Close the device to save the file
+dev.off()
+
+# Plot the curves
+png("LPV2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+```
+
+## All inhibitors
+```{r}
+# ATV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_ATV <- c(0.897001049,1.534578927,0.796950766,0.916790973,1.173054378)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_ATV <- c(1.352603262,1.567577547,0.799184248,0.78491542,1.054536388)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_ATV <- c(1.014825526,1.649007801,0.871906525,0.808731157,0.927492651)
+# Median FC
+FC_median_ATV <- c(3,1,0.8,0.8,2)
+
+# DRV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_DRV <- c(1.312634387,0.876617981,0.893677937)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_DRV <- c(1.139530585,0.687031702,0.852309776)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_DRV <- c(1.427931816,1.006875167,0.977540457)
+# Median FC
+FC_median_DRV <- c(0.9,0.8,0.6)
+
+# IDV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_IDV <- c(0.854338081, 1.126120987, 0.972350191, 0.825845588, 1.100121877, 0.822695752, 0.960595423, 0.728228423, 0.819437744, 1.009070072, 1.153778771, 0.95546618)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_IDV <- c(1.02282427,1.282074005,0.986741994,0.880965098,1.34955373,0.933309457,0.812604685,0.760600972,0.798239898,1.012549727,1.350480416,0.884335874)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_IDV <- c(1.10101938,1.222653254,0.962110537,1.006590621,1.288664059,1.06118098,0.844659655,0.992419404,0.798666933,0.907603974,1.213313502,1.120532326)
+# Median FC
+FC_median_IDV <- c(1.5,0.5,0.6,0.1,1,0.4,0.6,0.9,0.75,1,1.2,1.6)
+
+# LPV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_LPV <- c(0.778859282,0.915708022,1.286583194,0.877899956,0.755963532,0.833363059,0.835707918,1.180246554)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_LPV <- c(0.957257353,1.04672122,1.269996827,1.131051956,0.956755067,0.894593315,0.876484379,1.220895691)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_LPV <- c(0.933782477,1.049669126,1.183128858,0.959789333,0.872106388,0.761131063,0.909272792,1.263683094)
+# Median FC
+FC_median_LPV <- c(1.6,0.6,1.1,0.5,0.5,0.8,0.9,0.4)
+
+# NFV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_NFV <- c(1.091480187,1.155509207,1.147314693,0.986384536,1.392486308,0.896273929,0.961480544,0.764748027,0.804897728,1.405058743,1.264139411,1.151333868)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_NFV <- c(1.064085097,1.439161535,1.239692876,1.057591106,1.42733447,1.086663134,0.914576514,0.917969682,1.07845639,1.192706031,1.371224651,0.898933313)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_NFV <- c(1.186327878,1.033789616,1.081736675,1.330627302,1.149443393,1.229004772,1.729249956,1.649221434,1.156659745,1.083926144,0.972314323,0.785447378)
+# Median FC
+FC_median_NFV <- c(1.3,0.4,0.5,0.1,1,0.5,0.8,1.1,1,1.3,15.3,2.4)
+
+# SQV
+# Ratio of Affinity (unrelaxed)
+affinity_unrelaxed_SQV <- c(1.031875358,1.243511628,0.900923988,1.301665257,0.967093311,0.965524315,0.722806632,0.85946024,0.863900473,0.912902342)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_SQV <- c(1.109366813,1.465283174,1.13005981,1.805011528,1.250370683,1.105184606,0.959012485,1.34354006,1.137829472,1.012616126)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_SQV <- c(1.064580449,1.047035223,0.862839023,1.466713516,0.974025292,0.718515784,0.805306039,1.094202983,1.106146988,1.164363485)
+# Median FC
+FC_median_SQV <- c(1.3,0.4,0.7,0.95,0.5,0.6,1,0.6,6.1,0.5)
+
+# TPV
+affinity_unrelaxed_TPV <- c(1.392665507,0.837786893,0.68749936)
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal_TPV <- c(1.369824202,0.969355825,0.873308432)
+# Ratio of Affinity (Relaxed from pipeline)
+affinity_RelaxFromPipeline_TPV <- c(1.223720785,0.877662339,0.699141879)
+# Median FC
+FC_median_TPV <- c(0.75,1.4,0.8)
+
+# All data
+affinity_unrelaxed <- c(affinity_unrelaxed_ATV, affinity_unrelaxed_DRV,affinity_unrelaxed_IDV,affinity_unrelaxed_LPV,affinity_unrelaxed_NFV,affinity_unrelaxed_SQV,affinity_unrelaxed_TPV)
+affinity_RelaxFromCrystal <- c(affinity_RelaxFromCrystal_ATV, affinity_RelaxFromCrystal_DRV,affinity_RelaxFromCrystal_IDV,affinity_RelaxFromCrystal_LPV,affinity_RelaxFromCrystal_NFV,affinity_RelaxFromCrystal_SQV,affinity_RelaxFromCrystal_TPV)
+affinity_RelaxFromPipeline <- c(affinity_RelaxFromPipeline_ATV, affinity_RelaxFromPipeline_DRV,affinity_RelaxFromPipeline_IDV,affinity_RelaxFromPipeline_LPV,affinity_RelaxFromPipeline_NFV,affinity_RelaxFromPipeline_SQV,affinity_RelaxFromPipeline_TPV)
+FC_median <- c(FC_median_ATV,FC_median_DRV,FC_median_IDV,FC_median_LPV,FC_median_NFV,FC_median_SQV,FC_median_TPV)
+
+# plot
+# Combine all the drug names
+drug_names <- rep(c("ATV", "DRV", "IDV", "LPV", "NFV", "SQV", "TPV"), times = c(5, 3, 12, 8, 12, 10, 3))
+# Create color vector for different drugs
+drug_colors <- c("ATV" = "red", "DRV" = "blue", "IDV" = "green", "LPV" = "purple", "NFV" = "orange", "SQV" = "pink", "TPV" = "cyan")
+colors <- drug_colors[drug_names]
+
+# Plot all the graphs with drug-specific colors
+png("ALL1.png", width = 2000, height = 1500, res = 300)
+par(mfrow = c(1, 3))
+
+# Plot for unrelaxed affinity
+plot(affinity_unrelaxed, FC_median, main = "Unrelaxed", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16, col = colors)
+linear_model_unrelaxed <- lm(FC_median ~ affinity_unrelaxed)
+summary(linear_model_unrelaxed)
+abline(linear_model_unrelaxed, col = "blue")
+# Add legend
+legend("topright", legend = names(drug_colors), col = drug_colors, pch = 16, cex = 0.85, title = "Drug")
+
+# Plot for Relaxed from crystal
+plot(affinity_RelaxFromCrystal, FC_median, main = "Relaxed from crystal", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16, col = colors)
+linear_model_crystal <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model_crystal)
+abline(linear_model_crystal, col = "blue")
+# Add legend
+legend("topright", legend = names(drug_colors), col = drug_colors, pch = 16, cex = 0.85,title = "Drug")
+
+# Plot for Relaxed from pipeline
+plot(affinity_RelaxFromPipeline, FC_median, main = "Relaxed from pipeline", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16, col = colors)
+linear_model_pipeline <- lm(FC_median ~ affinity_RelaxFromPipeline)
+summary(linear_model_pipeline)
+abline(linear_model_pipeline, col = "blue")
+# Add legend
+legend("topright", legend = names(drug_colors), col = drug_colors, pch = 16, cex = 0.85,title = "Drug")
+# Close the device to save the file
+dev.off()
+
+par(mfrow = c(1, 1))  # Reset plot layout to 1x1
+
+
+# Plot the curves
+png("ALL2.png", width = 2000, height = 1500, res = 300)
+plot(affinity_unrelaxed, FC_median, type = "n",  # type = "n" creates an empty plot
+     main = "All Models Comparison (Curves Only)", 
+     xlab = "Ratio of Affinity", ylab = "Median of Fold Change", 
+     xlim = range(c(affinity_unrelaxed, affinity_RelaxFromCrystal, affinity_RelaxFromPipeline)), 
+     ylim = range(FC_median))
+abline(lm(FC_median ~ affinity_unrelaxed), col = "red", lty = 1)
+abline(lm(FC_median ~ affinity_RelaxFromCrystal), col = "blue", lty = 2)
+abline(lm(FC_median ~ affinity_RelaxFromPipeline), col = "green", lty = 3)
+legend("topright", legend = c("Unrelaxed", "Relaxed from crystal", "Relaxed from pipeline"), 
+       col = c("red", "blue", "green"), lty = c(1, 2, 3), cex = 0.8)
+# Close the device to save the file
+dev.off()
+
+```
