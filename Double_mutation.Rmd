@@ -1,0 +1,126 @@
+---
+title: "Double_mutations"
+output: html_document
+date: "2024-10-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## DRV
+
+```{r cars}
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(0.873241525,0.737190192,0.848924264,1.144237438,0.763990188,0.713956438,0.786752647,0.924313422,1.265854028,1.23878306,1.113101498,1.249607762,0.817219096,0.988199683,0.893254488,1.077947051)
+
+# Median FC
+FC_median <- c(0.9,0.55,0.8,0.4,0.65,1.2,0.9,0.5,1,0.6,1.6,0.7,0.4,0.4,0.3,0.8)
+
+# plot
+png("DRV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "DRV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
+## ATV
+
+```{r pressure, echo=FALSE}
+# Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(0.834866002,0.687598371,0.740613805,0.75964505,1.177912471,0.709114126,0.855486137,0.796422734,0.764483729,0.91620233,2.735893639,0.821643938,0.416689067,0.963445491,0.762679658,1.173277254,1.411362616,1.194099491,1.368202483,1.256633358,0.825692884,0.99663943,1.030796699,0.824994859,0.923865798,1.021901714)
+
+# Median FC
+FC_median <- c(1.2,0.65,0.5,0.9,6,1,1,0.7,0.9,0.5,0.7,0.8,1.2,1.2,0.8,0.8,0.8,1,0.8,0.9,1.4,0.7,0.5,0.6,1.1,0.8)
+
+# plot
+png("ATV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "ATV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
+## TPV
+```{r}
+ # Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(0.799890246,0.762972443,0.958485056,0.770417138,0.979486867,1.352946502,0.910439695,0.739728244,1.005698854,1.233006394,1.385073232,1.377867798,1.472274338,1.542096068,1.276092956,1.419075053,0.777785227,1.075379328)
+
+# Median FC
+FC_median <- c(1,0.5,0.5,0.8,0.8,0.5,1,0.9,1.1,0.6,0.9,1.1,1.1,0.8,0.4,0.5,0.4,0.7)
+
+# plot
+png("TPV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "TPV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
+## SQV
+```{r}
+ # Ratio of Affinity (Relaxed from crystal)
+affinity_RelaxFromCrystal <- c(1.344763825,1.048104661,1.492694014,1.184443639,1.25622178,0.863822976,1.415562587,1.023813079,1.070638209,1.150901111,0.991091958,1.883893738,1.251148845,1.324506945,1.248114256,0.980068907,1.179302084,2.22355823,0.956190836,0.749182302,1.075991145,0.944533666,0.744224023,1.365341666,0.982615634,0.883688125,1.40204476,1.253677504,1.737283214,1.371004975,1.465112027,1.420118721,1.341782625,1.217253743,0.906145861,1.18359993,0.938341769,1.190267069,1.126546222,0.945461833,0.832516426)
+
+# Median FC
+FC_median <- c(1,1,24.7,0.5,0.4,1.1,0.9,0.7,0.8,0.2,1,0.3,3.2,1.2,0.9,0.9,0.6,0.6,1,1,0.85,1.4,1.2,0.5,0.3,0.6,0.6,0.8,0.9,1,1,0.4,0.8,0.9,1.1,0.4,0.5,0.6,0.8,0.8,1.8)
+
+# plot
+png("SQV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "SQV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
+## IDV
+```{r}
+IDV <- read.table("C:/Users/ruini/Desktop/project/data/double_mutation/IDV_input.txt", sep = "\t", header = FALSE)
+
+# Assigning columns to variables
+affinity_RelaxFromCrystal <- IDV[, 1]  # First column
+FC_median <- IDV[, 2]  # Second column
+
+# plot
+png("IDV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "IDV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
+## NFV
+```{r}
+NFV <- read.table("C:/Users/ruini/Desktop/project/data/double_mutation/NFV_input.txt", sep = "\t", header = FALSE)
+
+# Assigning columns to variables
+affinity_RelaxFromCrystal <- NFV[, 1]  # First column
+FC_median <- NFV[, 2]  # Second column
+
+# plot
+png("NFV.png", width = 2000, height = 1500, res = 300)
+plot(affinity_RelaxFromCrystal, FC_median, main = "NFV", xlab = "Ratio of Affinity", ylab = "Median of Fold Change", pch = 16)
+linear_model <- lm(FC_median ~ affinity_RelaxFromCrystal)
+summary(linear_model)
+abline(linear_model, col = "blue")
+r_squared <- summary(linear_model)$r.squared
+text(x = min(affinity_RelaxFromCrystal), y = max(FC_median) * 0.8, labels = paste("R^2 =", round(r_squared, 3)), pos = 4, col = "blue")
+dev.off()
+```
+
