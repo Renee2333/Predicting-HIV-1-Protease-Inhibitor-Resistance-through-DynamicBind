@@ -1,0 +1,6 @@
+CompMutList,TPV
+R57G,0.8
+,0.5
+L63P,1.4
+R57G,0.7
+I64V,0.8

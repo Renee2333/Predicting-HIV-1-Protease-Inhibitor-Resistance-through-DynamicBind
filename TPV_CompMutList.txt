@@ -1,0 +1,5 @@
+CompMutList
+R57G
+L63P
+R57G
+I64V
